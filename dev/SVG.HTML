@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "">
+<html xmlns="" xml:lang="en">
+<head>
+<title>SVG test</title>
+<script type="text/javascript"> 
+function init() 
+{ 
+			var a = {
+				NW:3,
+				NH:3,
+				WL:0.3,
+				DB:3,
+				Lx1 :0.35,
+				TW1:.35,
+				TW2:.35,
+				Lx2:0.35,
+				TB:.35,
+				TT:.35,
+				CG:0.3,
+				EFS:30000E6
+			};
+			var translate={x:3,y:8};
+
+
+
+			var scale=40;
+			/*var svgContainer = d3.select("svgLayer").append("svg")
+				.attr("width",200)
+				.attr("height",200);*/
+			var svgContainer = d3.select("#svgLayer").attr("width",600)
+				.attr("height",600); 
+				
+							
+			var arrowMarker = svgContainer.append("marker")
+			.attr("id","arrow")
+			.attr("markerUnits","strokeWidth")
+				.attr("markerWidth","12")
+									.attr("markerHeight","12")
+									.attr("viewBox","0 0 12 12")
+									.attr("refX","6")
+									.attr("refY","6")
+									.attr("orient","auto");
+			//¼ýÍ· 
+			var arrow_path = "M2,2 L10,6 L2,10 L6,6 L2,2";
+			 
+			arrowMarker.append("path")
+			.attr("d",arrow_path)
+			.attr("fill","#000");
+			
+			arrowMarker = svgContainer.append("marker")
+			.attr("id","arrow1")
+			.attr("markerUnits","strokeWidth")
+				.attr("markerWidth","12")
+									.attr("markerHeight","12")
+									.attr("viewBox","0 0 12 12")
+									.attr("refX","6")
+									.attr("refY","6")
+									.attr("orient","180deg");
+			arrowMarker.append("path")			
+			.attr("d",arrow_path)
+			.attr("fill","#000");
+			
+			
+			arrowMarker = svgContainer.append("marker")
+			.attr("id","arrow2")
+			.attr("markerUnits","strokeWidth")
+				.attr("markerWidth","12")
+									.attr("markerHeight","12")
+									.attr("viewBox","0 0 12 12")
+									.attr("refX","6")
+									.attr("refY","6")
+									.attr("orient","90deg");
+			arrowMarker.append("path").attr("d",arrow_path)
+			.attr("fill","#000");
+			
+			
+			//path for ±ê×¢
+			gridx=[-a.Lx1-a.TW1,-a.TW1,0,a.NW,a.NW+a.TW2,a.NW+a.TW2+a.Lx2,a.NW+a.TW2+a.Lx2+0.6];
+			gridy=[a.TB+0.6,a.TB,0,-a.NH,-a.NH-a.TT,-a.NH-a.TT-a.DB,-a.NH-a.TT-a.DB-a.CG];
+			textx=[a.Lx1.toString(),a.TW1.toString(),a.NW.toString(),a.TW2.toString(),a.Lx2.toString()];
+			texty=[a.TB.toString(),a.NH.toString(),a.TT.toString(),a.DB.toString(),a.CG.toString()];
+			var pathtemp="";var path0=""
+			for(var i=0;i<5;i++){
+				pathtemp = "M"+gridx[i]+","+gridy[0]+ " L"+gridx[i+1]+","+gridy[0];
+				path0=svgContainer.append("path");
+				path0.attr("id","path"+eval(i+1).toString()).attr("d",pathtemp).attr("fill","#000");
+				path0.attr("stroke","black").attr("stroke-width","0.02").attr("marker-end","url(#arrow)").attr("marker-start","url(#arrow1)");
+				path0.attr("transform","scale("+scale+"),translate("+translate.x+" "+translate.y+")");
+			}
+			
+			for(var i=1;i<6;i++){
+				pathtemp = "M"+gridx[6]+","+gridy[i]+ " L"+gridx[6]+","+gridy[i+1];
+				path0=svgContainer.append("path");
+				path0.attr("id","path"+eval(i+5).toString()).attr("d",pathtemp).attr("fill","#000");
+				path0.attr("stroke","black").attr("stroke-width","0.02").attr("marker-end","url(#arrow)").attr("marker-start","url(#arrow2)");
+				path0.attr("transform","scale("+scale+"),translate("+translate.x+" "+translate.y+")");
+			}
+			
+				
+				var string1="scale("+scale+"),translate("+translate.x+" "+translate.y+")"
+				console.log(string1);
+				//»­Ô²ÐÎ
+				//var circle = svgContainer.append("circle").attr("cx",30).attr("cy",30).attr("r",20).attr("transform","scale("+scale+"),translate("+translate.x+" "+translate.y+")");
+				//×ó±Ú°å
+				var img = svgContainer.append("rect").attr("x",-a.TW1).attr("y",-a.NH-a.TT).attr("width",a.TW1).attr("height",a.NH+a.TT).attr("transform","scale("+scale+"),translate("+translate.x+" "+translate.y+")");
+				//ÓÒ±Ú°å
+				img = svgContainer.append("rect").attr("x",a.NW).attr("y",-a.NH-a.TT).attr("width",a.TW1).attr("height",a.NH+a.TT).attr("transform","scale("+scale+"),translate("+translate.x+" "+translate.y+")");
+				//¶¥°å
+				img = svgContainer.append("rect").attr("x",-a.TW1).attr("y",-a.NH-a.TT).attr("width",a.TW1+a.NW+a.TW2).attr("height",a.TT).attr("transform","scale("+scale+"),translate("+translate.x+" "+translate.y+")");
+				//µ×°å
+				img = svgContainer.append("rect").attr("x",-a.TW1-a.Lx1).attr("y",0).attr("width",a.Lx1+a.TW1+a.NW+a.TW2+a.Lx2).attr("height",a.TB).attr("transform","scale("+scale+"),translate("+translate.x+" "+translate.y+")");
+				//µØÃæÏß
+				var line=svgContainer.append("line").attr("x1",-a.TW1-a.Lx1).attr("y1",-a.NH-a.TT-a.DB).attr("x2",a.NW+a.TW2+a.Lx2).attr("y2",-a.NH-a.TT-a.DB).attr("style","stroke:rgb(255,0,0);stroke-width:0.05").attr("transform","scale("+scale+"),translate("+translate.x+" "+translate.y+")");
+				//³¬¸ß
+				line=svgContainer.append("line").attr("x1",-a.TW1-a.Lx1).attr("y1",-a.NH-a.TT-a.DB-a.CG).attr("x2",a.NW+a.TW2+a.Lx2).attr("y2",-a.NH-a.TT-a.DB-a.CG).attr("style","stroke:rgb(255,0,0);stroke-width:0.05;stroke-dasharray:.2,.2").attr("transform","scale("+scale+"),translate("+translate.x+" "+translate.y+")");
+				//var zuobiban = svgContainer.append("rect").attr("x",-a.TW1).attr("y",-a.NH-a.TT).attr("width",a.TW1).attr("height",a.NH+a.TT).attr("transform","scale("+20+"),translate("+10+" "+10+")");
+				line=svgContainer.append("line").attr('id','line1').attr("x1",-a.TW1-a.Lx1).attr("y1",a.TB+0.35).attr("x2",a.NW+a.TW2+a.Lx2).attr("y2",a.TB+0.35)
+				.attr("style","stroke:rgb(0,0,0);stroke-width:0.02;").attr("marker-end","url(#arrow)").attr("marker-start","url(#arrow1)")
+				.attr("transform","scale("+scale+"),translate("+translate.x+" "+translate.y+")");
+				var text="";
+				for(var i=0;i<5;i++){
+					text=svgContainer.append("text");
+					text.append("textPath").attr("startOffset","0%").attr("xlink:href", "#path"+(i+1).toString()).text(textx[i].toString()).style("font-size", "2")
+					.attr("transform","scale("+scale+"),translate("+translate.x+" "+translate.y+")");
+					//text.append("textPath").attr("startOffset","20%");
+				}
+				for(var i=6;i<11;i++){
+					text=svgContainer.append("text");
+					text.append("textPath").attr("startOffset","0%").attr("xlink:href", "#path"+(i+0).toString()).text(texty[i-6].toString()).style("font-size", "2")
+					.attr("transform","scale("+scale+"),translate("+translate.x+" "+translate.y+")");
+					//text.append("textPath").attr("startOffset","20%");
+				}
+				
+				
+
+} 
+
+</script>
+</head>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<body onload="init();">
+
+<div id="svgDiv" align="left">
+
+<svg id="svgLayer" width="400px" height="400px" viewBox="0 0 400 400" version="1.1" xmlns="http://www.w3.org/2000/svg">
+
+</svg>
+</div>
+</body>
+</html>
