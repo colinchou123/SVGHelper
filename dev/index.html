@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "">
+<html xmlns="" xml:lang="en">
+<head>
+<title>SVG test</title>
+</head>
+<script src="./svghlper.js"></script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script >
+function init() 
+{
+addMarker1("svgLayer");
+addMarker2("svgLayer");
+var a=addFilledArea("svgLayer",20,20,50,50);
+console.log(a);
+a.attr("transform","scale("+2+"),translate("+3+" "+3+")");
+}
+
+</script>
+<body onload="init();">
+
+<div id="svgDiv" align="left">
+
+<svg id="svgLayer" width="400px" height="400px" viewBox="0 0 400 400" version="1.1" xmlns="http://www.w3.org/2000/svg">
+
+</svg>
+</div>
+</body>
+</html>
